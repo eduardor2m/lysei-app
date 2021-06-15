@@ -1,0 +1,12 @@
+{
+  "name": "lysei",
+  "displayName": "lysei",
+  "expo": {
+    "name": "lysei",
+    "slug": "lysei",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}

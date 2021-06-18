@@ -1,28 +1,29 @@
 import React from 'react';
-
-import { RectButtonProps } from 'react-native-gesture-handler'
-import { SvgProps } from 'react-native-svg';
+import { RectButtonProps } from 'react-native-gesture-handler';
 
 import {
     Container,
-    ImageContainer,
-    Text,
+    Text
+} from './styles';
 
-} from './styles'
-
-interface Props extends RectButtonProps {
+interface Props extends RectButtonProps{
     title: string;
-
 }
 
-export function Button({title, ...rest}: Props){
-    return (
-        <Container {...rest}>
-
+export function Button({
+    title,
+    enabled = true,
+    ...rest
+} : Props){
+    return(
+        <Container 
+            enabled={enabled}
+            style={{ opacity: enabled ? 1 : .5 }}
+            {...rest}
+        >
             <Text>
                 {title}
             </Text>
         </Container>
-
     )
 }

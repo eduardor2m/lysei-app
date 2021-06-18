@@ -1,105 +1,111 @@
 import styled from 'styled-components/native';
-import {Feather, AntDesign} from '@expo/vector-icons';
+import { RFValue, RFPercentage } from 'react-native-responsive-fontsize';
+import { BorderlessButton } from 'react-native-gesture-handler';
 
 export const Container = styled.View`
-  width: 100%;
-  height: 40%;
-  /* background-color: red; */
+    width: 100%;
 
-  padding: 10px;
-  margin-top: 10px;
-  border-bottom-width: 0.5px;
-  border-bottom-color: ${({theme}) => theme.colors.text};
+    border-bottom-width: 1px;
+    border-bottom-color: ${({ theme }) => theme.colors.line};
+
+    padding-bottom: 21px;
+    margin-bottom: 49px;
 `;
 
 export const User = styled.View`
     width: 100%;
-    height: 30%;
-
-    /* background-color: gray; */
 
     flex-direction: row;
     align-items: center;
+`;
 
-`; 
 export const Photo = styled.Image`
-    width: 60px;
-    height: 60px;
-    margin-right: 30px;
+    width: 51px;
+    height: 51px;
+    margin-right: 15px;
 
-    border-radius: 20px;
-
+    border-radius: 26px;
 `;
-export const ImageP = styled.Image`
 
+export const ImageP = styled.Image``;
 
-`;
-export const WrapperUser = styled.View`
+export const WrapperUser = styled.View``;
 
-`;
 export const Name = styled.Text`
-    font-family: ${({theme}) => theme.fonts.medium};
-    color: ${({theme}) => theme.colors.text_dark};
-
+    font-family: ${({ theme }) => theme.fonts.black};
+    color: ${({ theme }) => theme.colors.title};
+    font-size: ${RFValue(18)}px;
 `;
+
 export const Address = styled.Text`
-    font-family: ${({theme}) => theme.fonts.regular};
-    color: ${({theme}) => theme.colors.text};
-
+    font-family: ${({ theme }) => theme.fonts.regular};
+    color: ${({ theme }) => theme.colors.text};
+    font-size: ${RFValue(16)}px;
 `;
+
 export const Title = styled.Text`
-    font-size: 22px;
-    font-family: ${({theme}) => theme.fonts.bold};
-    color: ${({theme}) => theme.colors.text_dark};
+    font-family: ${({ theme }) => theme.fonts.black};
+    color: ${({ theme }) => theme.colors.title};
+    font-size: ${RFValue(24)}px;
+
+    margin-top: 19px;
+    margin-bottom: 22px;
 `;
-export const Images = styled.Image`
+
+export const Media = styled.ScrollView.attrs({
+    horizontal: true,
+    showsHorizontalScrollIndicator: false
+})`
     width: 100%;
-    height: 50%;
-
-    border-radius: 10px;
-
-
 `;
-export const ListImages = styled.FlatList`
 
+export const Map = styled.View`
+    width: 280px;
+    height: 200px;
+
+    border-radius: 8px;
+
+    background-color: ${({ theme }) => theme.colors.text};
 `;
-export const Wrapper = styled.View`
+
+export const Image = styled.Image`
+    width: 280px;
+    height: 200px;
+
+    border-radius: 8px;
+    
+    margin-left: 12px;
+`;
+
+export const Options = styled.View`
+    margin-top: 23px;
+
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
-
 `;
-export const Likes = styled.View`
+
+export const Likes = styled(BorderlessButton)`
     flex-direction: row;
-    align-items: center;
-    margin-top: 5px;
-
+    justify-content: center;
 `;
-export const Icon = styled(AntDesign).attrs({
-    size: 20,
-    color: '#F59138'
-})`
 
-`;
-export const Number = styled.Text`
-    margin-left: 5px;
-    font-family: ${({theme}) => theme.fonts.regular};
-    color: #F59138;
+export const NumberLikes = styled.Text`
+    font-family: ${({ theme }) => theme.fonts.black};
+    color: ${({ theme }) => theme.colors.secondary};
+    font-size: ${RFValue(18)}px;
 
+    margin-left: 10px;
 `;
-export const Share = styled.View`
+
+export const Share = styled(BorderlessButton)`
     flex-direction: row;
-    align-items: center;
-    margin-top: 5px;
-
+    justify-content: center;
 `;
-export const TitleShare = styled.Text`
-    margin-right: 5px;
-    font-family: ${({theme}) => theme.fonts.regular};
-    color: ${({theme}) => theme.colors.text};
 
+export const LabelShare = styled.Text`
+    font-family: ${({ theme }) => theme.fonts.black};
+    color: ${({ theme }) => theme.colors.text};
+    font-size: ${RFValue(18)}px;
+
+    margin-right: 10px;
 `;
-export const IconShare = styled(Feather).attrs({
-    size: 20,
-    color: '#969CB2'
-})``;

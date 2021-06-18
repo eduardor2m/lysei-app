@@ -20,7 +20,7 @@ export const InputMessage = styled.TextInput`
     font-family: ${({theme}) => theme.fonts.regular};
     font-size: ${RFValue(14)}px;
 
-    color: ${({theme}) => theme.colors.text_dark};
+    color: ${({theme}) => theme.colors.text};
     background-color: ${({theme}) => theme.colors.shape};
     border-radius: 5px;
     border-width: 1px;
@@ -39,7 +39,7 @@ export const Midia = styled.TextInput`
     font-family: ${({theme}) => theme.fonts.regular};
     font-size: ${RFValue(14)}px;
 
-    color: ${({theme}) => theme.colors.text_dark};
+    color: ${({theme}) => theme.colors.text};
     background-color: ${({theme}) => theme.colors.shape};
     border-radius: 5px;
     border-width: 1px;
@@ -52,7 +52,7 @@ export const Midia = styled.TextInput`
 
 export const Title = styled.Text`
     font-family: ${({theme}) => theme.fonts.medium};
-    color: ${({theme}) => theme.colors.text_dark};
+    color: ${({theme}) => theme.colors.text};
     font-size: ${RFValue(30)}px;
 
     text-align: center;

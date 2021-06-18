@@ -1,30 +1,50 @@
 import React from 'react';
+import { StatusBar } from 'react-native';
 
 import {
-  Container,
-  Title,
-  Description,
-  Wrapper,
+	Container,
+	Title,
+	Description,
+	SuccessBox,
+	Button,
+	ButtonText,
 } from './styles';
 
-import ImgSuccess from '../../assets/success.svg'
-import { Button } from '../../components/Button';
+import SuccessSvg from '../../assets/success.svg';
 
-export function Success({ navigation }: any){
-  return (
-    <Container>
-        <Wrapper>
-            <ImgSuccess
-                width={100}
-                height={100}
-            />
-            <Title>Sucesso</Title>
-            <Description>
-                Seu cadastro foi realizado com
-                sucesso e já está disponível!
-            </Description>
-            <Button title="Voltar para o mapa" onPress={() => navigation.navigate('Feed')}/>
-        </Wrapper>
-    </Container>
-  );
+export function Success({ navigation }: any) {
+
+	function handleHome() {
+		//navigation.navigate('Home');
+	}
+
+	return (
+		<Container>
+			<StatusBar
+				barStyle="light-content"
+				translucent
+				backgroundColor="transparent"
+			/>
+
+			<SuccessBox>
+				<SuccessSvg
+					width={60}
+					height={60}
+				/>
+			</SuccessBox>
+
+			<Title>Sucesso</Title>
+
+			<Description>
+				Sua ocorrência foi cadastrada{'\n'}
+				com sucesso e já está{'\n'}disponível!
+			</Description>
+
+			<Button
+				onPress={handleHome}
+			>
+				<ButtonText>Voltar para a Home</ButtonText>
+			</Button>
+		</Container>
+	);
 }

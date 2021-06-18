@@ -1,61 +1,56 @@
 import React from 'react';
 
 import {
-  Container,
-  Header,
-  Footer,
-  Image,
-  TitleWrapper,
-  Title,
-  SignInTitle,
-  FooterWrapper
+	Container,
+	Header,
+	Title,
+	Subtitle,
+	Footer,
+	FooterWrapper
 } from './styles';
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-
-import LogoSvg from '../../assets/hackathon.svg';
-import GoogleSvg from '../../assets/google.svg';
-import { RFValue } from 'react-native-responsive-fontsize';
 import { SignInSocialButton } from '../../components/SignInSocialButton';
 
-export function SignIn({ navigation }: any){
-  return (
-    <Container>
-        <Header>
-          <TitleWrapper>
-            <LogoSvg
-                width={RFValue(324)}
-                height={RFValue(209)}
-            />
+import ConceptSvg from '../../assets/hackathon.svg';
+import GoogleSvg from '../../assets/google.svg';
+import AppleSvg from '../../assets/apple.svg';
 
-            <Title>
-              Ajude a cuidar {'\n'}
-              da sua cidade 
-            </Title>
-          </TitleWrapper>
-          <SignInTitle>
-            Fiscalize obras em decadência {'\n'}
-            ou não concluídas e problemas {'\n'}
-            que necessitam de atenção
-          </SignInTitle>
-          
+export function SignIn({ navigation }: any) {
 
+	function handleLogin(){
+		navigation.navigate('Register')
+	}
 
+	return (
+		<Container>
+			<Header>
+				<ConceptSvg />
 
-        </Header>
+				<Title>
+					Ajude a cuidar{'\n'}
+					da sua cidade
+				</Title>
 
-        <Footer>
-          <FooterWrapper>
-            <SignInSocialButton 
-                        title="Entrar com Google"
-                        svg={GoogleSvg}
-                        onPress={() => navigation.navigate('Register')}
-                    />
-          </FooterWrapper>
+				<Subtitle>
+					Fiscalize obras em decadência{'\n'}
+					ou não concluídas e problemas{'\n'}
+					que necessitam de atenção
+				</Subtitle>
+			</Header>
 
-        </Footer>
-
-    </Container>
-  );
+			<Footer>
+				<FooterWrapper>
+					<SignInSocialButton
+						title="Entrar com o Google"
+						icon={GoogleSvg}
+						onPress={handleLogin}
+					/>
+					<SignInSocialButton
+						title="Entrar com a Apple"
+						icon={AppleSvg}
+					/>
+				</FooterWrapper>
+			</Footer>
+		</Container>
+	);
 }

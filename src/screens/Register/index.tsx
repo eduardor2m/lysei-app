@@ -1,35 +1,81 @@
 import React from 'react';
+import {
+	KeyboardAvoidingView,
+	TouchableWithoutFeedback,
+	Keyboard,
+	View
+} from 'react-native';
+import { useTheme } from 'styled-components';
 
 import {
-  Container,
-  Wrapper,
-  Title,
-  Description,
-  Footer
+	Container,
+	Content,
+	Header,
+	Title,
+	Description,
+	Form,
+	Footer
 } from './styles';
 
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
 
-export function Register({ navigation }: any){
-  return (
-    <Container>
-        <Wrapper>
-            <Title>
-              Quase Lá
-            </Title>
-            <Description>
-                Fiscalize obras em decadência {'\n'}
-                ou não concluídas e problemas {'\n'}
-                que necessitam de atenção
-            </Description>
-            <Input placeholder="CPF"/>
-            <Input placeholder="Cidade"/>
-        </Wrapper>
-        <Footer>
-            <Button title="Prosseguir" onPress={() => navigation.navigate('Feed')}/>
-        </Footer>
+export function Register({ navigation }: any) {
+	const theme = useTheme();
 
-    </Container>
-  );
+	function handleSubmit() {
+		navigation.navigate('AppRoutes')
+	}
+
+	return (
+		<Container>
+			<KeyboardAvoidingView behavior="position" enabled>
+				<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+					<Content>
+						<Header>
+							<Title>
+								Quase lá
+							</Title>
+
+							<Description>
+								Preencha as informações a{'\n'}
+								seguir para completar o seu{'\n'}
+								cadastro e prosseguir
+							</Description>
+						</Header>
+
+						<Form>
+							<Input
+								placeholder="CPF"
+								autoCorrect={false}
+								keyboardType="numeric"
+								placeholderTextColor={theme.colors.border}
+							/>
+
+							<Input
+								placeholder="Estado"
+								autoCorrect={false}
+								keyboardType="default"
+								autoCapitalize="words"
+								placeholderTextColor={theme.colors.border}
+							/>
+
+							<Input
+								placeholder="Cidade"
+								autoCorrect={false}
+								keyboardType="default"
+								autoCapitalize="words"
+								placeholderTextColor={theme.colors.border}
+							/>
+
+							<Footer>
+								<Button title="Prosseguir" onPress={handleSubmit} />
+							</Footer>
+
+						</Form>
+					</Content>
+				</TouchableWithoutFeedback>
+			</KeyboardAvoidingView>
+		</Container>
+	);
 }

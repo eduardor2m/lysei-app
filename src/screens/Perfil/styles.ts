@@ -21,7 +21,7 @@ export const Photo = styled.View`
 
     border-radius: 50px;
 
-    background-color: ${({theme}) => theme.colors.sucess};
+    background-color: ${({theme}) => theme.colors.success};
 
 `;
 export const Footer = styled.View`
@@ -36,7 +36,7 @@ export const Footer = styled.View`
 `;
 export const Name = styled.Text`
     font-family: ${({theme}) => theme.fonts.medium};
-    color: ${({theme}) => theme.colors.text_dark};
+    color: ${({theme}) => theme.colors.text};
     font-size: ${RFValue(30)}px;
 
     text-align: center;

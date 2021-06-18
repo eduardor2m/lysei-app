@@ -1,39 +1,44 @@
-import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { Dimensions } from 'react-native';
 
 export const Container = styled.View`
-  flex: 1;
-  justify-content: space-around;
+	flex:1;
+    background-color: ${({ theme }) => theme.colors.shape};
 `;
 
-export const Wrapper = styled.View`
-    margin-left: 10px;
-    margin-right: 10px;
+export const Content = styled.View`
+	padding-top: 45px;
+`;
 
+export const Header = styled.View`
+	margin-top: 113px;
 `;
 
 export const Title = styled.Text`
-    font-family: ${({theme}) => theme.fonts.medium};
-    color: ${({theme}) => theme.colors.text_dark};
-    font-size: ${RFValue(30)}px;
+    font-family: ${({theme}) => theme.fonts.black};
+    color: ${({theme}) => theme.colors.title};
+    font-size: ${RFValue(36)}px;
 
     text-align: center;
-
-    margin-top: 45px;
 `;
 
 export const Description = styled.Text`
     font-family: ${({theme}) => theme.fonts.regular};
     color: ${({theme}) => theme.colors.text};
-    font-size: ${RFValue(16)}px;
+    font-size: ${RFValue(18)}px;
 
     text-align: center;
 
-    margin-top: 20px;
-    margin-bottom: 67px;
+    margin-top: 17px;
+    margin-bottom: 50px;
+`;
+
+export const Form = styled.View`
+	padding: 0 55px;
+	margin-bottom: 19px;
 `;
 
 export const Footer = styled.View`
-    margin-left: 10px;
-    margin-right: 10px;
+	margin-top: 19px;
 `;

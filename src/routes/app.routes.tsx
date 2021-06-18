@@ -1,20 +1,16 @@
 import React from 'react';
-import {Platform} from 'react-native'
-import {MaterialIcons, Feather} from '@expo/vector-icons'
+import { Platform } from 'react-native'
+import { Feather } from '@expo/vector-icons'
 import { useTheme } from 'styled-components';
-
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// import { Dashboard } from '../screens/Dashboard';
-import { Register } from '../screens/Register';
-// import { Resume } from '../screens/Resume';
-import { PublicationDetails } from '../screens/PublicationDetails';
+
 import { Feed } from '../screens/Feed';
 import { RegisterOccorrence } from '../screens/RegisterOccurrence';
-import { Perfil } from '../screens/Perfil';
 import { MyPublicationsAndSaves } from '../screens/MyPublicationsAndSaves';
 import { Notifications } from '../screens/Notifications';
+import { Perfil } from '../screens/Perfil';
 
-const {Navigator, Screen} = createBottomTabNavigator();
+const { Navigator, Screen } = createBottomTabNavigator();
 
 export function AppRoutes() {
 
@@ -23,12 +19,15 @@ export function AppRoutes() {
     return (
         <Navigator
             tabBarOptions={{
-                activeTintColor: theme.colors.secondary,
+                activeTintColor: theme.colors.primary,
                 inactiveTintColor: theme.colors.text,
-                labelPosition: 'beside-icon',
+                showLabel: false,
                 style: {
                     paddingVertical: Platform.OS === 'ios' ? 20 : 0,
-                    height: 88,
+                    height: 80,
+                    backgroundColor: theme.colors.background,
+                    borderTopWidth: 0,
+                    elevation: 0
                 }
             }}
         >
@@ -36,11 +35,10 @@ export function AppRoutes() {
                 name="Feed"
                 component={Feed}
                 options={{
-                    title: '',
-                    tabBarIcon: (({ size, color}) => (
-                        <MaterialIcons
-                            name="home-filled"
-                            size={size}
+                    tabBarIcon: (({ color }) => (
+                        <Feather
+                            name="home"
+                            size={20}
                             color={color}
                         />
 
@@ -51,42 +49,24 @@ export function AppRoutes() {
                 name="RegisterOccorrence"
                 component={RegisterOccorrence}
                 options={{
-                    title: '',
-                    tabBarIcon: (({ size, color}) => (
-                        <MaterialIcons
-                            name="add"
-                            size={size}
+                    tabBarIcon: (({ color }) => (
+                        <Feather
+                            name="plus"
+                            size={20}
                             color={color}
                         />
 
                     ))
                 }}
             />
-            <Screen
-                name="PublicationDetails"
-                component={PublicationDetails}
-                options={{
-                    title: '',
-                    tabBarIcon: (({ size, color}) => (
-                        <MaterialIcons
-                            name="pie-chart"
-                            size={size}
-                            color={color}
-                        />
-
-                    ))
-                }}
-            />
-            
             <Screen
                 name="Publi"
                 component={MyPublicationsAndSaves}
                 options={{
-                    title: '',
-                    tabBarIcon: (({ size, color}) => (
-                        <MaterialIcons
+                    tabBarIcon: (({ color }) => (
+                        <Feather
                             name="layers"
-                            size={size}
+                            size={20}
                             color={color}
                         />
 
@@ -97,11 +77,10 @@ export function AppRoutes() {
                 name="Notifications"
                 component={Notifications}
                 options={{
-                    title: '',
-                    tabBarIcon: (({ size, color}) => (
+                    tabBarIcon: (({ color }) => (
                         <Feather
                             name="bell"
-                            size={size}
+                            size={20}
                             color={color}
                         />
 
@@ -112,11 +91,10 @@ export function AppRoutes() {
                 name="Perfil"
                 component={Perfil}
                 options={{
-                    title: '',
-                    tabBarIcon: (({ size, color}) => (
+                    tabBarIcon: (({ color }) => (
                         <Feather
                             name="user"
-                            size={size}
+                            size={20}
                             color={color}
                         />
 

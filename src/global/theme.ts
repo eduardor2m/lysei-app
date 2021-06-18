@@ -1,27 +1,20 @@
 export default {
     colors: {
         primary: '#6A37FF',
-
-        secondary: '#EDF3F9',
-        secondary_light: 'rgba(168, 88, 198, 0.6)',
-
-        sucess: '#12A454',
-        sucess_light: 'rgba(18, 164, 84, 0.5)',
-
-        attention: '#E83F5B',
-        attention_light: 'rgba(232, 63, 91, 0.5)',
-
+        secondary: '#F59138',
+        background: '#FAFAFC',
+        title: '#2B2B47',
+        text: '#A2AAB2',
+        attention: '#FA5A7D',
+        success: '#10C2BF',
+        line: '#EDF3F9',
         shape: '#FFFFFF',
-        title: '#363F5F',
-        text: '#969CB2',
-        text_dark: '#000000',
-
-        background: '#F0F2F5',
+        border: '#E5E5E5'
     },
 
     fonts: {
-        regular: 'Poppins_400Regular',
-        medium: 'Poppins_500Medium',
-        bold: 'Poppins_700Bold'
+        regular: 'Roboto_400Regular',
+        medium: 'Roboto_500Medium',
+        black: 'Roboto_900Black',
     }
 }

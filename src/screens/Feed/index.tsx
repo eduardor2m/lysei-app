@@ -1,21 +1,47 @@
 import React from 'react';
+import { Feather } from '@expo/vector-icons';
+import { useTheme } from 'styled-components';
+import { FlatList } from 'react-native';
 
 import {
-  Container,
-  Input
+	Container,
+	FilterBar,
+	Input
 } from './styles';
 
 import { Publication } from '../../components/Publication';
 import { Button } from '../../components/Button';
 
-export function Feed({ navigation }: any){
-  return (
-    <Container>
-      <Input placeholder="Sua cidade"/>
-      <Publication/>
-      <Button title="Prosseguir" onPress={() => navigation.navigate('RegisterOccorrence')}/>
+export function Feed({ navigation }: any) {
 
+	const theme = useTheme();
 
-    </Container>
-  );
+	return (
+		<Container>
+			<FilterBar>
+				<Input 
+					placeholder="Sua cidade"
+					autoCorrect={false}
+					autoCapitalize="words"
+					placeholderTextColor={theme.colors.text}
+				/>
+
+				<Feather 
+					name="search"
+					size={24}
+					color={theme.colors.primary}
+				/>
+			</FilterBar>
+
+			<FlatList
+				data={[1,2,3]}
+				keyExtractor={item => item.toString()}
+				showsVerticalScrollIndicator={false}
+				renderItem={({ item }) => (
+					<Publication />
+				)}
+			/>
+			
+		</Container>
+	);
 }

@@ -21,7 +21,7 @@ export function Notifications() {
 					keyExtractor={item => item.toString()}
 					showsVerticalScrollIndicator={false}
 					renderItem={({ item }) => (
-						<Notification />
+						<Notification user="Eduardo Melo"/>
 					)}
 				/>
 			</Footer>

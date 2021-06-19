@@ -10,7 +10,11 @@ import {
     UserName
 } from './styles';
 
-export function Notification() {
+interface Props {
+    user: string
+}
+
+export function Notification({user}: Props) {
     return (
         <Container>
             <Wrapper>
@@ -18,7 +22,7 @@ export function Notification() {
             </Wrapper>
             <Wrapper>
                 <Info>
-                    O <UserName>Nome do usuário</UserName> curtiu sua publicação.
+                    O <UserName>{user}</UserName> curtiu sua publicação.
                 </Info>
             </Wrapper>
 

@@ -19,10 +19,10 @@ export function AuthRoutes() {
                 name="Register"
                 component={Register}
             />
-            <Screen
+            {/* <Screen
                 name="AppRoutes"
                 component={AppRoutes}
-            />
+            /> */}
         </Navigator>
     )
 }

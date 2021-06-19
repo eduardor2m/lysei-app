@@ -13,6 +13,7 @@ import {
 	Roboto_500Medium,
 	Roboto_900Black
 } from '@expo-google-fonts/roboto';
+import { AuthProvider, useAuth } from './src/hooks/auth';
 
 export default function App() {
 
@@ -22,9 +23,11 @@ export default function App() {
 		Roboto_900Black
 	});
 
-	if (!fontsLoaded) {
-		return <AppLoading />
-	}
+  const {userStorageLoading} = useAuth();
+
+  if(!fontsLoaded || userStorageLoading){
+    return <AppLoading/>
+  }
 	return (
 		<ThemeProvider theme={theme}>
 			<StatusBar
@@ -32,7 +35,9 @@ export default function App() {
 				translucent
 				backgroundColor="transparent"
 			/>
-			<Routes />
+			<AuthProvider>
+				<Routes />
+			</AuthProvider>
 		</ThemeProvider>
 	);
 }

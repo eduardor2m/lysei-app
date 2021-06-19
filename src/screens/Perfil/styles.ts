@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { RectButton } from 'react-native-gesture-handler';
+import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
+
 
 export const Container = styled.View`
     flex: 1;
@@ -14,8 +15,11 @@ export const Header = styled.View`
 
     background-color: ${({ theme }) => theme.colors.primary};
 
-    justify-content: center;
-    align-items: center;
+    padding-top: 45px;
+    padding-right: 27px;
+
+    justify-content: flex-start;
+    align-items: flex-end;
 `;
 
 export const Photo = styled.Image`
@@ -57,3 +61,5 @@ export const TextButton = styled.Text`
     color: ${({ theme }) => theme.colors.background};
     font-size: ${RFValue(18)}px;
 `;
+
+export const ButtonSignOut = styled(BorderlessButton)``;

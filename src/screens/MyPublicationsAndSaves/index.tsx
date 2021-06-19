@@ -30,7 +30,7 @@ export function MyPublicationsAndSaves() {
 				</Saves>
 			</Header>
 			<Footer>
-				<Publication onPress={() => {}} coordinate={{latitude: 10, longitude: 10}} images={[]}/>
+				<Publication user={{name:"Eduardo", city:"Arapiraca"}} publication={{title: "Buraco", likes: "270"}} onPress={() => {}} coordinate={{latitude: 10, longitude: 10}} images={[]}/>
 			</Footer>
 
 		</Container>

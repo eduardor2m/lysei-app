@@ -42,7 +42,7 @@ export function Feed({ navigation }: any) {
 				keyExtractor={item => item.toString()}
 				showsVerticalScrollIndicator={false}
 				renderItem={({ item }) => (
-					<Publication onPress={handleToView} coordinate={{latitude: 10, longitude: 10}} images={[]}/>
+					<Publication user={{name:"Eduardo", city:"Arapiraca"}} publication={{title: "Buraco", likes: "270"}} onPress={handleToView} coordinate={{latitude: 10, longitude: 10}} images={[]}/>
 				)}
 			/>
 			

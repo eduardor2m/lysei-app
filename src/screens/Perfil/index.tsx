@@ -4,6 +4,7 @@ import { useTheme } from 'styled-components';
 import { Input } from '../../components/Input';
 
 import avatar from '../../assets/avatar.png'
+import {MaterialIcons} from '@expo/vector-icons'
 
 import {
 	Container,
@@ -12,19 +13,28 @@ import {
 	Name,
 	Form,
 	Button,
-	TextButton
+	TextButton,
+	ButtonSignOut
 } from './styles';
+import { useAuth } from '../../hooks/auth';
+
 
 export function Perfil({ navigation }: any) {
+
+	const {SignOut, user} = useAuth();
 	const theme = useTheme();
 
 	return (
 		<Container>
-			<Header />
+			<Header>
+				<ButtonSignOut onPress={SignOut}>
+					<MaterialIcons name="logout" size={24} color={theme.colors.shape}/>
+				</ButtonSignOut>
+			</Header>
 
 			<Photo source={avatar} />
 
-			<Name>Eduardo Melo</Name>
+			<Name>{user.name}</Name>
 
 			<Form>
 

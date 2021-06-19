@@ -38,15 +38,30 @@ interface PropsCoordinate{
     longitude: number
 }
 
+interface PropsUser {
+    name: string;
+    city: string;
+
+}
+
+interface PropsPublication {
+    title: string,
+    likes: string
+}
+
 interface Props{
     coordinate: PropsCoordinate,
     images: PropsImage[],
+    user: PropsUser,
+    publication: PropsPublication,
     onPress(): void
 }
 
 export function Publication({
     coordinate,
     images,
+    user,
+    publication,
     onPress
 }:Props) {
 
@@ -70,8 +85,8 @@ export function Publication({
                     <Photo source={avatar} />
 
                     <WrapperUser>
-                        <Name>Eduardo Melo</Name>
-                        <Address>Campinas - SP</Address>
+                        <Name>{user.name}</Name>
+                        <Address>{user.city}</Address>
                     </WrapperUser>
                 </User>
                 <ButtonToView>
@@ -83,7 +98,7 @@ export function Publication({
                 </ButtonToView>
             </Header>
 
-            <Title>Buraco</Title>
+            <Title>{publication.title}</Title>
 
             <Media>
                 <MapView
@@ -124,7 +139,7 @@ export function Publication({
                         color={theme.colors.secondary}
                     />
                     <NumberLikes>
-                        270
+                        {publication.likes}
                     </NumberLikes>
                 </Likes>
 

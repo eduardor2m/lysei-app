@@ -5,7 +5,7 @@ import { useTheme } from 'styled-components';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { Feed } from '../screens/Feed';
-import { RegisterOccorrence } from '../screens/RegisterOccurrence';
+import { RegisterRoutes } from './register.routes';
 import { MyPublicationsAndSaves } from '../screens/MyPublicationsAndSaves';
 import { Notifications } from '../screens/Notifications';
 import { Perfil } from '../screens/Perfil';
@@ -46,8 +46,8 @@ export function AppRoutes() {
                 }}
             />
             <Screen
-                name="RegisterOccorrence"
-                component={RegisterOccorrence}
+                name="RegisterRoutes"
+                component={RegisterRoutes}
                 options={{
                     tabBarIcon: (({ color }) => (
                         <Feather

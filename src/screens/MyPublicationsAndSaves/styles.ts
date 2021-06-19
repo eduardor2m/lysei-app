@@ -1,54 +1,83 @@
+import styled from 'styled-components/native';
 import { RectButton } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
-import styled from 'styled-components/native';
 
 export const Container = styled.View`
-  flex: 1;
+    flex: 1;
+    background-color: ${({ theme }) => theme.colors.shape};
 `;
 
 export const Header = styled.View`
     width: 100%;
-    height: 200px;
     margin-top: 40px;
+    margin-bottom: 51px;
 
     flex-direction: row;
+    justify-content: center;
 
+    border-bottom-width: 1px;
+    border-bottom-color: ${({ theme }) => theme.colors.line};
 `;
-export const Text = styled.Text`
+
+export const TextMyPublications = styled.Text`
     text-align: center;
-    font-family: ${({theme}) => theme.fonts.medium};
-    color: #F59138;
-
+    font-family: ${({ theme }) => theme.fonts.black};
+    color: ${({ theme }) => theme.colors.secondary};
+    font-size: ${RFValue(18)}px;
 `;
+
+export const TextSaves = styled.Text`
+    text-align: center;
+    font-family: ${({ theme }) => theme.fonts.black};
+    color: ${({ theme }) => theme.colors.text};
+    font-size: ${RFValue(18)}px;
+`;
+
 export const MyPublicationsButton = styled(RectButton)`
     height: ${RFValue(80)}px;
-    width: 45%;
+    width: 80%;
 
-    background-color: ${({theme}) => theme.colors.primary};
-    border-radius: 5px;
+    /* background-color: ${({ theme }) => theme.colors.primary}; */
 
     align-items: center;
     justify-content: center;
     flex-direction: row;
-
-    margin-bottom: 16px;
-    margin-left: 2.5%;
-    margin-right: 2.5%;
-
 `;
+
 export const MySavesButton = styled(RectButton)`
     height: ${RFValue(80)}px;
-    width: 45%;
+    width: 80%;
 
-    background-color: ${({theme}) => theme.colors.primary};
-    border-radius: 5px;
+    /* background-color: ${({ theme }) => theme.colors.primary}; */
 
     align-items: center;
     justify-content: center;
     flex-direction: row;
+`;
 
-    margin-bottom: 16px;
-    margin-left: 2.5%;
-    margin-right: 2.5%;
+export const Saves = styled.View`
+    width: 40%;
+    height: ${RFValue(80)}px;
+    
+    align-items: center;
 
+    /*border-bottom-width: 2px;
+    border-bottom-color: ${({ theme }) => theme.colors.secondary};*/
+
+    margin-left: 5%;
+`;
+
+export const MyPublications = styled.View`
+    width: 40%;
+    height: ${RFValue(80)}px;
+
+    align-items: center;
+
+    border-bottom-width: 2px;
+    border-bottom-color: ${({ theme }) => theme.colors.secondary};
+`;
+
+export const Footer = styled.View`
+    padding-left: 33px;
+    padding-right: 33px;
 `;

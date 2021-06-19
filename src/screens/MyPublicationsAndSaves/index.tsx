@@ -1,26 +1,38 @@
 import React from 'react';
+import { Publication } from '../../components/Publication';
 
 import {
-  Container,
-  Header,
-  MyPublicationsButton,
-  MySavesButton,
-  Text
+	Container,
+	Header,
+	MyPublicationsButton,
+	MySavesButton,
+	MyPublications,
+	Saves,
+	TextMyPublications,
+	TextSaves,
+	Footer
 } from './styles';
 
-export function MyPublicationsAndSaves(){
-  return (
-    <Container>
-        <Header>
-            <MyPublicationsButton onPress={() => {}}>
-                <Text>Minhas {'\n'} Publicações</Text>
+export function MyPublicationsAndSaves() {
+	return (
+		<Container>
+			<Header>
+				<MyPublications>
+					<MyPublicationsButton onPress={() => { }}>
+						<TextMyPublications>Minhas {'\n'} Publicações</TextMyPublications>
 
-            </MyPublicationsButton>
-            <MySavesButton onPress={() => {}}>
-                <Text>Minhas {'\n'} Favoritas</Text>
-            </MySavesButton>
-        </Header>
+					</MyPublicationsButton>
+				</MyPublications>
+				<Saves>
+					<MySavesButton onPress={() => { }}>
+						<TextSaves>Minhas {'\n'} Favoritas</TextSaves>
+					</MySavesButton>
+				</Saves>
+			</Header>
+			<Footer>
+				<Publication onPress={() => {}} coordinate={{latitude: 10, longitude: 10}} images={[]}/>
+			</Footer>
 
-    </Container>
-  );
+		</Container>
+	);
 }

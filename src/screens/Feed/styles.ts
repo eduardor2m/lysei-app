@@ -7,6 +7,7 @@ export const Container = styled.View`
 
 	padding:33px;
 	padding-top: 45px;
+	padding-bottom: 0px;
 `;
 
 export const FilterBar = styled.View`

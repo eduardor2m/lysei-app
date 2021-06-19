@@ -16,6 +16,10 @@ export function Feed({ navigation }: any) {
 
 	const theme = useTheme();
 
+	function handleToView(){
+
+	}
+
 	return (
 		<Container>
 			<FilterBar>
@@ -38,7 +42,7 @@ export function Feed({ navigation }: any) {
 				keyExtractor={item => item.toString()}
 				showsVerticalScrollIndicator={false}
 				renderItem={({ item }) => (
-					<Publication />
+					<Publication onPress={handleToView} coordinate={{latitude: 10, longitude: 10}} images={[]}/>
 				)}
 			/>
 			

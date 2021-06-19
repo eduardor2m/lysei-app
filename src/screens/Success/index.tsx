@@ -1,5 +1,6 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
+import { StackActions } from '@react-navigation/native';
 
 import {
 	Container,
@@ -14,8 +15,11 @@ import SuccessSvg from '../../assets/success.svg';
 
 export function Success({ navigation }: any) {
 
+	const popAction = StackActions.pop(2);
+
 	function handleHome() {
-		//navigation.navigate('Home');
+		navigation.dispatch(popAction);
+		navigation.navigate('Feed');
 	}
 
 	return (

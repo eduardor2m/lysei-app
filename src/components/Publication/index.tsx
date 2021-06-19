@@ -1,17 +1,25 @@
 import React from 'react';
 import { Feather } from '@expo/vector-icons';
 import { useTheme } from 'styled-components';
+import MapView, {
+    Marker,
+    PROVIDER_GOOGLE
+} from 'react-native-maps';
+
+import point from '../../assets/point.png'
+import avatar from '../../assets/avatar.png'
 
 import {
     Container,
+    Header,
     User,
     Photo,
     WrapperUser,
     Name,
     Address,
+    ButtonToView,
     Title,
     Media,
-    Map,
     Image,
     Options,
     Likes,
@@ -20,16 +28,31 @@ import {
     LabelShare
 } from './styles';
 
-interface Props {
+interface PropsImage{
     id: string;
     url: string;
 }
 
-export function Publication() {
+interface PropsCoordinate{
+    latitude: number,
+    longitude: number
+}
+
+interface Props{
+    coordinate: PropsCoordinate,
+    images: PropsImage[],
+    onPress(): void
+}
+
+export function Publication({
+    coordinate,
+    images,
+    onPress
+}:Props) {
 
     const theme = useTheme();
 
-    const UrlImg: Props[] = [
+    const UrlImg: PropsImage[] = [
         {
             id: '1',
             url: 'https://i.pinimg.com/originals/5a/72/e1/5a72e1f05f9e2e1b76a8438a7490dc3b.jpg'
@@ -42,20 +65,45 @@ export function Publication() {
 
     return (
         <Container>
+            <Header>
+                <User>
+                    <Photo source={avatar} />
 
-            <User>
-                <Photo source={{ uri: "https://i.pinimg.com/originals/5a/72/e1/5a72e1f05f9e2e1b76a8438a7490dc3b.jpg" }} />
-
-                <WrapperUser>
-                    <Name>Eduardo Melo</Name>
-                    <Address>Campinas - SP</Address>
-                </WrapperUser>
-            </User>
+                    <WrapperUser>
+                        <Name>Eduardo Melo</Name>
+                        <Address>Campinas - SP</Address>
+                    </WrapperUser>
+                </User>
+                <ButtonToView>
+                    <Feather
+                        name="arrow-right"
+                        size={24}
+                        color={theme.colors.secondary}
+                    />
+                </ButtonToView>
+            </Header>
 
             <Title>Buraco</Title>
 
             <Media>
-                <Map />
+                <MapView
+                    provider={PROVIDER_GOOGLE}
+                    style={{ flex: 1, width: 280, height: 200, borderRadius: 8 }}
+                    region={{
+                        latitude: -14.1333023,
+                        longitude: -59.9988083,
+                        latitudeDelta: 0.008,
+                        longitudeDelta: 0.008,
+                    }}
+                    scrollEnabled={false}
+                >
+
+                    <Marker
+                        icon={point}
+                        coordinate={{ latitude: -14.1333023, longitude: -59.9988083 }}
+                    />
+
+                </MapView>
 
                 <Image
                     source={{ uri: 'https://www.noviello.adv.br/wp-content/uploads/2019/06/buracos-nas-vias-wp.jpg' }}

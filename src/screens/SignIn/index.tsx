@@ -1,4 +1,5 @@
 import React from 'react';
+import { Alert } from 'react-native';
 
 import {
 	Container,
@@ -14,23 +15,22 @@ import { SignInSocialButton } from '../../components/SignInSocialButton';
 import ConceptSvg from '../../assets/hackathon.svg';
 import GoogleSvg from '../../assets/google.svg';
 import AppleSvg from '../../assets/apple.svg';
+
 import { useAuth } from '../../hooks/auth';
-import { Alert } from 'react-native';
+
 
 export function SignIn({ navigation }: any) {
 
-	const {SignInWithGoogle} = useAuth();
+	const { SignInWithGoogle } = useAuth();
 
-	    async function handleSignInWithGoogle(){
-        try {
-            return await SignInWithGoogle()
-        } catch (error) {
-            console.log(error);
-            Alert.alert('Não foi possivel conectar a conta Google');
-        } 
-		// navigation.navigate('Register');
-
-    }
+	async function handleSignInWithGoogle() {
+		try {
+			return await SignInWithGoogle()
+		} catch (error) {
+			console.log(error);
+			Alert.alert('Não foi possivel conectar a conta Google');
+		}
+	}
 
 	return (
 		<Container>

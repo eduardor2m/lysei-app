@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTheme } from 'styled-components';
+import {
+	Modal,
+	Alert,
+	StatusBar
+} from 'react-native';
+import * as Yup from 'yup';
 
 import { Input } from '../../components/Input';
+import { Select } from '../../components/Select';
 
-import avatar from '../../assets/avatar.png'
-import {MaterialIcons} from '@expo/vector-icons'
+import { StateSelect } from '../StateSelect';
+import { CitySelect } from '../CitySelect';
+
+import avatar from '../../assets/avatar.png';
+import { MaterialIcons } from '@expo/vector-icons';
+
+import { useAuth } from '../../hooks/auth';
 
 import {
 	Container,
@@ -16,23 +28,82 @@ import {
 	TextButton,
 	ButtonSignOut
 } from './styles';
-import { useAuth } from '../../hooks/auth';
-
 
 export function Perfil({ navigation }: any) {
 
-	const {SignOut, user} = useAuth();
+	const { SignOut, user } = useAuth();
 	const theme = useTheme();
+
+	const [uf, setUf] = useState(user.state!);
+	const [ufModalOpen, setUfModalOpen] = useState(false);
+
+	const [city, setCity] = useState(user.city!);
+	const [cityModalOpen, setCityModalOpen] = useState(false);
+
+	function handleOpenSelectUfModal() {
+		setUfModalOpen(true);
+	}
+
+	function handleCloseSelectUfModal(item: string) {
+		setCity('Cidade');
+		setUf(item);
+		setUfModalOpen(false);
+	}
+
+	function handleOpenSelectCityModal() {
+		if (uf === 'Estado') {
+			Alert.alert('Atenção', 'Selecione o estado primeiro!');
+		} else {
+			setCityModalOpen(true);
+		}
+	}
+
+	function handleCloseSelectCityModal(item: string) {
+		setCity(item)
+		setCityModalOpen(false);
+	}
+
+	async function handleUpdate() {
+		try {
+			const ufFilled = uf === 'Estado' ? '' : uf;
+			const cityFilled = city === 'Cidade' ? '' : city;
+
+			const schema = Yup.object().shape({
+				cityFilled: Yup.string()
+					.required('A cidade é obrigatória!'),
+				ufFilled: Yup.string()
+					.required('O estado é obrigatório!'),
+			});
+
+			const data = { ufFilled, cityFilled }
+			await schema.validate(data);
+
+			navigation.navigate('AppRoutes')
+
+		} catch (error) {
+			if (error instanceof Yup.ValidationError) {
+				Alert.alert('Atenção', error.message);
+			} else {
+				Alert.alert('Não foi possível atualizar seu cadastro');
+			}
+		}
+	}
 
 	return (
 		<Container>
+			<StatusBar
+				barStyle="light-content"
+				translucent
+				backgroundColor="transparent"
+			/>
+
 			<Header>
 				<ButtonSignOut onPress={SignOut}>
-					<MaterialIcons name="logout" size={24} color={theme.colors.shape}/>
+					<MaterialIcons name="logout" size={24} color={theme.colors.shape} />
 				</ButtonSignOut>
 			</Header>
 
-			<Photo source={avatar} />
+			{ !!user.photo ? <Photo source={{ uri: user.photo }} /> : <Photo source={avatar} />}
 
 			<Name>{user.name}</Name>
 
@@ -40,7 +111,7 @@ export function Perfil({ navigation }: any) {
 
 				<Input
 					placeholder="CPF"
-					value="123.456.789-10"
+					value={user.cpf}
 					autoCorrect={false}
 					keyboardType="default"
 					autoCapitalize="words"
@@ -48,18 +119,36 @@ export function Perfil({ navigation }: any) {
 					editable={false}
 				/>
 
-				<Input 
-					placeholder="Cidade"
-					value="São José do Rio Pardo - SP" 
-					autoCorrect={false}
-					keyboardType="default"
-					autoCapitalize="words"
-					placeholderTextColor={theme.colors.border}
+				<Select
+					value={uf}
+					isFilled={uf === 'Estado' ? false : true}
+					onPress={handleOpenSelectUfModal}
 				/>
 
-				<Input 
+				<Select
+					value={city}
+					isFilled={city === 'Cidade' ? false : true}
+					onPress={handleOpenSelectCityModal}
+				/>
+
+				<Modal visible={ufModalOpen}>
+					<StateSelect
+						uf={uf}
+						setUf={handleCloseSelectUfModal}
+					/>
+				</Modal>
+
+				<Modal visible={cityModalOpen}>
+					<CitySelect
+						city={city}
+						uf={uf}
+						setCity={handleCloseSelectCityModal}
+					/>
+				</Modal>
+
+				<Input
 					placeholder="E-mail"
-					value="usuario@email.com" 
+					value={user.email}
 					autoCorrect={false}
 					keyboardType="default"
 					autoCapitalize="words"
@@ -67,7 +156,7 @@ export function Perfil({ navigation }: any) {
 					editable={false}
 				/>
 
-				<Button>
+				<Button onPress={handleUpdate}>
 					<TextButton>Atualizar perfil</TextButton>
 				</Button>
 			</Form>

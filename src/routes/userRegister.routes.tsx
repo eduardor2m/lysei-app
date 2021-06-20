@@ -2,16 +2,17 @@ import React from 'react';
 
 import {createStackNavigator} from '@react-navigation/stack';
 
-import { SignIn } from '../screens/SignIn';
+import { Register } from '../screens/Register';
 
 const {Navigator, Screen} = createStackNavigator();
 
-export function AuthRoutes() {
+export function UserRegisterRoutes() {
     return(
         <Navigator headerMode="float" screenOptions={{headerShown: false}}>
+
             <Screen
-                name="SignIn"
-                component={SignIn}
+                name="Register"
+                component={Register}
             />
         </Navigator>
     )

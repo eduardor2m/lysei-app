@@ -11,7 +11,7 @@ export const Container = styled.View`
 
 export const Header = styled.View`
     width: 100%;
-    height: 200px;
+    height: 180px;
 
     background-color: ${({ theme }) => theme.colors.primary};
 
@@ -25,6 +25,8 @@ export const Header = styled.View`
 export const Photo = styled.Image`
     width: 169px;
     height: 169px;
+
+    border-radius: 85px;
 
     margin-top: -100px;
 `;

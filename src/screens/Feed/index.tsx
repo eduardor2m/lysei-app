@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { useTheme } from 'styled-components';
 import {
@@ -6,11 +6,11 @@ import {
 	Alert,
 	Modal
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 
 import {
 	Container,
-	FilterBar,
-	Input
+	FilterBar
 } from './styles';
 
 import { Publication } from '../../components/Publication';
@@ -19,21 +19,67 @@ import { Select } from '../../components/Select';
 import { StateSelect } from '../StateSelect';
 import { CitySelect } from '../CitySelect';
 
-interface UserStateCity{
+import { useAuth } from '../../hooks/auth';
+
+interface UserStateCity {
 	uf: string;
 	city: string;
+}
+
+interface DataProps {
+	name: string;
+	city: string;
+	state: string;
+	avatar: string;
+	id: string;
+	title: string;
+	totalLike: number;
+	like: boolean;
+	status: boolean;
+	latitude: number;
+	longitude: number;
 }
 
 export function Feed({ navigation }: any) {
 
 	const theme = useTheme();
+	const { user } = useAuth();
+
+	const [data, setData] = useState<DataProps[]>([
+		{
+			name: "Eduardo",
+			city: "São José do Rio Pardo",
+			state: "SP",
+			avatar: "",
+			id: '1',
+			title: "Buraco",
+			totalLike: 270,
+			like: false,
+			status: false,
+			latitude: -21.5968283,
+			longitude: -46.8903086,
+		},
+		{
+			name: "Isabela",
+			city: "São José do Rio Pardo",
+			state: "SP",
+			avatar: "",
+			id: '2',
+			title: "Buraco",
+			totalLike: 100,
+			like: false,
+			status: false,
+			latitude: -21.5968283,
+			longitude: -46.8903086,
+		},
+	]);
 
 	const [userUfCity, setUserUfCity] = useState<UserStateCity>({} as UserStateCity)
 
-	const [uf, setUf] = useState('');
+	const [uf, setUf] = useState(user.state!);
 	const [ufModalOpen, setUfModalOpen] = useState(false);
 
-	const [city, setCity] = useState('');
+	const [city, setCity] = useState(user.city!);
 	const [cityModalOpen, setCityModalOpen] = useState(false);
 
 	function handleOpenSelectUfModal() {
@@ -59,9 +105,30 @@ export function Feed({ navigation }: any) {
 		setCityModalOpen(false);
 	}
 
-	function handleToView() {
+	function handleUpdateLike(id_post: string, id_user: string, likes: number) {
 
+		let newData = [...data];
+
+		data.map((item, index) => {
+			if (item.id === id_post) {
+				newData[index].like = !item.like;
+				item.like ? newData[index].totalLike += 1 : newData[index].totalLike -= 1;
+			}
+		});
+
+		setData(newData)
 	}
+
+	function handleToView(id_post: string) {
+		navigation.navigate('ViewOccurrence', {id_post});
+	}
+
+	useFocusEffect(useCallback(() => {
+        const parent = navigation.dangerouslyGetParent();
+		parent.setOptions({
+			tabBarVisible: true
+		});
+    }, []));
 
 	return (
 		<Container>
@@ -105,16 +172,31 @@ export function Feed({ navigation }: any) {
 			</FilterBar>
 
 			<FlatList
-				data={[1, 2, 3]}
-				keyExtractor={item => item.toString()}
+				data={data}
+				keyExtractor={item => item.id.toString()}
 				showsVerticalScrollIndicator={false}
 				renderItem={({ item }) => (
-					<Publication 
-						user={{ name: "Eduardo", city: "Arapiraca" }} 
-						publication={{ title: "Buraco", likes: "270" }} 
-						onPress={handleToView} 
-						coordinate={{ latitude: 10, longitude: 10 }} 
-						images={[]} />
+					<Publication
+						userPost={{
+							name: item.name,
+							city: item.city,
+							state: item.state,
+							avatar: item.avatar
+						}}
+						publication={{
+							id: item.id.toString(),
+							title: item.title,
+							totalLike: item.totalLike,
+							like: item.like,
+							status: item.status
+						}}
+						onPressToView={handleToView}
+						onPressLike={handleUpdateLike}
+						coordinate={{
+							latitude: item.latitude,
+							longitude: item.longitude
+						}}
+					/>
 				)}
 			/>
 

@@ -6,6 +6,8 @@ import MapView, {
     PROVIDER_GOOGLE
 } from 'react-native-maps';
 
+import { useAuth } from '../../hooks/auth';
+
 import point from '../../assets/point.png'
 import avatar from '../../assets/avatar.png'
 
@@ -25,15 +27,12 @@ import {
     Likes,
     NumberLikes,
     Share,
-    LabelShare
+    LabelShare,
+    Status,
+    TextStatus
 } from './styles';
 
-interface PropsImage{
-    id: string;
-    url: string;
-}
-
-interface PropsCoordinate{
+interface PropsCoordinate {
     latitude: number,
     longitude: number
 }
@@ -41,72 +40,59 @@ interface PropsCoordinate{
 interface PropsUser {
     name: string;
     city: string;
-
+    state: string;
+    avatar: string
 }
 
 interface PropsPublication {
+    id: string;
     title: string,
-    likes: string
+    status: boolean;
+    totalLike: number;
+    like: boolean;
 }
 
-interface Props{
+interface Props {
     coordinate: PropsCoordinate,
-    images: PropsImage[],
-    user: PropsUser,
+    userPost: PropsUser,
     publication: PropsPublication,
-    onPress(): void
+    onPressToView: (id_post: string) => void,
+    onPressLike: (id_post: string, id_user: string, likes: number) => void,
 }
 
 export function Publication({
     coordinate,
-    images,
-    user,
+    userPost,
     publication,
-    onPress
-}:Props) {
+    onPressToView,
+    onPressLike
+}: Props) {
 
     const theme = useTheme();
-
-    const UrlImg: PropsImage[] = [
-        {
-            id: '1',
-            url: 'https://i.pinimg.com/originals/5a/72/e1/5a72e1f05f9e2e1b76a8438a7490dc3b.jpg'
-        },
-        {
-            id: '2',
-            url: 'https://blog.psicologiaviva.com.br/wp-content/uploads/2017/07/mapeamento-do-perfil-de-colaboradores-como-ele-e-um-aliado-das-empresas.jpg'
-        }
-    ]
+    const { user } = useAuth();
 
     return (
         <Container>
-            <Header>
-                <User>
-                    <Photo source={avatar} />
+            <ButtonToView onPress={() => onPressToView(publication.id)} activeOpacity={0.8}>
+                <Header>
+                    <User>
+                        {userPost.avatar != "" ? <Photo source={{ uri: userPost.avatar }} /> : <Photo source={avatar} />}
 
-                    <WrapperUser>
-                        <Name>{user.name}</Name>
-                        <Address>{user.city}</Address>
-                    </WrapperUser>
-                </User>
-                <ButtonToView>
-                    <Feather
-                        name="arrow-right"
-                        size={24}
-                        color={theme.colors.secondary}
-                    />
-                </ButtonToView>
-            </Header>
+                        <WrapperUser>
+                            <Name>{userPost.name}</Name>
+                            <Address>{userPost.city} - {userPost.state}</Address>
+                        </WrapperUser>
+                    </User>
+                </Header>
 
-            <Title>{publication.title}</Title>
+                <Title>{publication.title}</Title>
 
-            <Media>
                 <MapView
                     provider={PROVIDER_GOOGLE}
-                    style={{ flex: 1, width: 280, height: 200, borderRadius: 8 }}
+                    style={{ flex: 1, width: '100%', height: 200, borderRadius: 8 }}
                     region={{
-                        latitude: -14.1333023,
-                        longitude: -59.9988083,
+                        latitude: coordinate.latitude,
+                        longitude: coordinate.longitude,
                         latitudeDelta: 0.008,
                         longitudeDelta: 0.008,
                     }}
@@ -115,44 +101,29 @@ export function Publication({
 
                     <Marker
                         icon={point}
-                        coordinate={{ latitude: -14.1333023, longitude: -59.9988083 }}
+                        coordinate={{ latitude: coordinate.latitude, longitude: coordinate.longitude }}
                     />
 
                 </MapView>
-
-                <Image
-                    source={{ uri: 'https://www.noviello.adv.br/wp-content/uploads/2019/06/buracos-nas-vias-wp.jpg' }}
-                    resizeMode="cover"
-                />
-
-                <Image
-                    source={{ uri: 'https://www.noviello.adv.br/wp-content/uploads/2019/06/buracos-nas-vias-wp.jpg' }}
-                    resizeMode="cover"
-                />
-            </Media>
+            </ButtonToView>
 
             <Options>
-                <Likes>
+                <Likes onPress={() => onPressLike(publication.id, user.id, publication.totalLike)}>
                     <Feather
                         name="thumbs-up"
                         size={24}
-                        color={theme.colors.secondary}
+                        color={publication.like ? theme.colors.secondary : theme.colors.text}
                     />
-                    <NumberLikes>
-                        {publication.likes}
+                    <NumberLikes like={publication.like}>
+                        {publication.totalLike}
                     </NumberLikes>
                 </Likes>
 
-                <Share>
-                    <LabelShare>
-                        Compartilhar
-                    </LabelShare>
-                    <Feather
-                        name="share-2"
-                        size={24}
-                        color={theme.colors.text}
-                    />
-                </Share>
+                <Status status={publication.status}>
+                    <TextStatus status={publication.status}>
+                        {publication.status ? "Concluído" : "Pendente"}
+                    </TextStatus>
+                </Status>
             </Options>
 
         </Container>

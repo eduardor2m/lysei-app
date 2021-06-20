@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Alert } from 'react-native';
 import MapView, {
 	Marker,
@@ -8,6 +8,7 @@ import MapView, {
 } from 'react-native-maps';
 import * as Location from "expo-location";
 import LottieView from 'lottie-react-native';
+import { useFocusEffect } from '@react-navigation/native';
 
 import loadMap from '../../assets/loadMap.json'
 import point from '../../assets/point.png'
@@ -55,6 +56,13 @@ export function RegisterOccurrenceMap({ navigation }: any) {
 	useEffect(() => {
 		getCurrentPosition();
 	}, []);
+
+	useFocusEffect(useCallback(() => {
+        const parent = navigation.dangerouslyGetParent();
+		parent.setOptions({
+			tabBarVisible: true
+		});
+    }, []));
 
 	return (
 		<Container>

@@ -9,7 +9,8 @@ import {
 	Footer
 } from './styles';
 
-export function Notifications() {
+export function Notifications({navigation}:any) {
+
 	return (
 		<Container>
 			<Header>

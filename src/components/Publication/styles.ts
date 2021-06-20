@@ -1,7 +1,15 @@
 import styled from 'styled-components/native';
-import { RFValue, RFPercentage } from 'react-native-responsive-fontsize';
-import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { BorderlessButton } from 'react-native-gesture-handler';
 import { TouchableOpacity } from 'react-native';
+
+interface StatusProps{
+    status: boolean;
+}
+
+interface LikeProps{
+    like: boolean;
+}
 
 export const Container = styled.View`
     width: 100%;
@@ -49,13 +57,7 @@ export const Address = styled.Text`
     font-size: ${RFValue(16)}px;
 `;
 
-export const ButtonToView = styled(RectButton)`
-    width: 51px;
-    height: 51px;
-
-    align-items: center;
-    justify-content: center;
-`;
+export const ButtonToView = styled(TouchableOpacity)``;
 
 export const Title = styled.Text`
     font-family: ${({ theme }) => theme.fonts.black};
@@ -94,9 +96,10 @@ export const Likes = styled(BorderlessButton)`
     justify-content: center;
 `;
 
-export const NumberLikes = styled.Text`
+export const NumberLikes = styled.Text<LikeProps>`
     font-family: ${({ theme }) => theme.fonts.black};
-    color: ${({ theme }) => theme.colors.secondary};
+    color: ${({ theme, like }) => 
+        like ? theme.colors.secondary : theme.colors.text};
     font-size: ${RFValue(18)}px;
 
     margin-left: 10px;
@@ -113,4 +116,24 @@ export const LabelShare = styled.Text`
     font-size: ${RFValue(18)}px;
 
     margin-right: 10px;
+`;
+
+export const Status = styled.View<StatusProps>`
+    width: 80px;
+    height: 24px;
+    border-radius: 30px;
+
+    border: 1px solid ${({ theme, status }) => 
+        status ? theme.colors.success : theme.colors.attention};
+    background-color: ${({ theme, status }) => 
+        status ? theme.colors.success : theme.colors.attention}40;
+
+    align-items: center;
+    margin-right: 1px;
+`;
+
+export const TextStatus = styled.Text<StatusProps>`
+    
+    color: ${({ theme, status }) => 
+        status ? theme.colors.success : theme.colors.attention};
 `;

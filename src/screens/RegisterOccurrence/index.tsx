@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTheme } from 'styled-components';
 import {
 	Alert,
@@ -129,6 +129,17 @@ export function RegisterOccurrence({ navigation }: any) {
 			}
 		}
 	}
+
+	useEffect(() => {
+		const parent = navigation.dangerouslyGetParent();
+		parent.setOptions({
+			tabBarVisible: false
+		});
+		return () =>
+			parent.setOptions({
+				tabBarVisible: true
+			});
+	}, []);
 
 	return (
 		<Container>

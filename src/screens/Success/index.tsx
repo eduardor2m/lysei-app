@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { StatusBar } from 'react-native';
-import { StackActions } from '@react-navigation/native';
+import { StackActions, useFocusEffect } from '@react-navigation/native';
 
 import {
 	Container,
@@ -21,6 +21,13 @@ export function Success({ navigation }: any) {
 		navigation.dispatch(popAction);
 		navigation.navigate('Feed');
 	}
+
+	useFocusEffect(useCallback(() => {
+        const parent = navigation.dangerouslyGetParent();
+		parent.setOptions({
+			tabBarVisible: false
+		});
+    }, []));
 
 	return (
 		<Container>

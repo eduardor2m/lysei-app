@@ -4,9 +4,9 @@ import { Feather } from '@expo/vector-icons'
 import { useTheme } from 'styled-components';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { Feed } from '../screens/Feed';
+import { FeedRoutes } from './feed.routes';
 import { RegisterRoutes } from './register.routes';
-import { MyPublicationsAndSaves } from '../screens/MyPublicationsAndSaves';
+import { PublicationsRoutes } from './publications.routes';
 import { Notifications } from '../screens/Notifications';
 import { Perfil } from '../screens/Perfil';
 
@@ -32,8 +32,8 @@ export function AppRoutes() {
             }}
         >
             <Screen
-                name="Feed"
-                component={Feed}
+                name="FeedRoutes"
+                component={FeedRoutes}
                 options={{
                     tabBarIcon: (({ color }) => (
                         <Feather
@@ -61,7 +61,7 @@ export function AppRoutes() {
             />
             <Screen
                 name="Publi"
-                component={MyPublicationsAndSaves}
+                component={PublicationsRoutes}
                 options={{
                     tabBarIcon: (({ color }) => (
                         <Feather

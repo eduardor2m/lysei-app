@@ -3,9 +3,11 @@
 </h1>
 
 <p align="center">
-  <img alt="GitHub top language" src="https://res.cloudinary.com/dawhwfbrw/image/upload/v1624245478/1_oqrgm8.jpg">
+  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/Eduardomelo83/lysei-app.svg?color=%236A37FF">
 
-  <img alt="Repository size" src="https://res.cloudinary.com/dawhwfbrw/image/upload/v1624245478/2_a3vkhk.jpg">
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/Eduardomelo83/lysei-app.svg?color=%236A37FF">
+
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/Eduardomelo83/lysei-app?color=%236A37FF">
 
   <a href="https://github.com/Eduardomelo83/lysei-app?/commits/master">
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/Eduardomelo83/lysei-app??color=%236A37FF">
@@ -23,11 +25,9 @@
   <a href="#arrowdown-como-baixar-o-projeto">Baixe o projeto</a>
 </p>
 <p align="center">
-  <img src="https://res.cloudinary.com/dzn5ixmhq/image/upload/v1624240947/lysei/image_2_iqtp52.png" alt="Lysei">
+  <img alt="Lysei" src="https://res.cloudinary.com/dawhwfbrw/image/upload/v1624245478/1_oqrgm8.jpg">
 
-  <img src="https://res.cloudinary.com/dzn5ixmhq/image/upload/v1624240958/lysei/image_1_kescmz.png" alt="Lysei">
-
-  <img src="https://res.cloudinary.com/dzn5ixmhq/image/upload/v1624240958/lysei/image_3_tox5c8.png" alt="Lysei">
+  <img alt="Lysei" src="https://res.cloudinary.com/dawhwfbrw/image/upload/v1624245478/2_a3vkhk.jpg">
 </p>
 
 

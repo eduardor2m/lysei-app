@@ -45,6 +45,7 @@ export function CitySelect({
                 data={cities}
                 style={{ flex: 1, width: '100%' }}
                 keyExtractor={(item) => item}
+                initialNumToRender={1000}
                 renderItem={({ item }) => (
                     <Uf
                         onPress={() => handleCitySelect(item)}

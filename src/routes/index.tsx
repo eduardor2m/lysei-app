@@ -12,7 +12,7 @@ export function Routes() {
     const { user } = useAuth();
     return (
         <NavigationContainer>
-            {user.id ? 
+            {user.token? 
                 user.cpf != '' ? <AppRoutes /> : <UserRegisterRoutes /> 
                 : <AuthRoutes /> }
         </NavigationContainer>

@@ -57,7 +57,7 @@ interface Props {
     userPost: PropsUser,
     publication: PropsPublication,
     onPressToView: (id_post: string) => void,
-    onPressLike: (id_post: string, id_user: string, likes: number) => void,
+    onPressLike: (id_post: string, likes: number) => void,
 }
 
 export function Publication({
@@ -108,7 +108,7 @@ export function Publication({
             </ButtonToView>
 
             <Options>
-                <Likes onPress={() => onPressLike(publication.id, user.id, publication.totalLike)}>
+                <Likes onPress={() => onPressLike(publication.id, publication.totalLike)}>
                     <Feather
                         name="thumbs-up"
                         size={24}

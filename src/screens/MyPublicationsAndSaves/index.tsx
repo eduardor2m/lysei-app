@@ -45,7 +45,7 @@ export function MyPublicationsAndSaves({navigation}: any) {
 			title: "Buraco",
 			totalLike: 270,
 			like: false,
-			status: false,
+			status: true,
 			latitude: -21.5968283,
 			longitude: -46.8903086,
 		},
@@ -64,7 +64,7 @@ export function MyPublicationsAndSaves({navigation}: any) {
 		},
 	]);
 
-	function handleUpdateLike(id_post: string, id_user: string, likes: number) {
+	function handleUpdateLike(id_post: string, likes: number) {
 
 		let newData = [...data];
 

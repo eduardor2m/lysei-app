@@ -43,6 +43,7 @@ export function StateSelect({
                 data={ufs}
                 style={{ flex: 1, width: '100%' }}
                 keyExtractor={(item) => item}
+                initialNumToRender={27}
                 renderItem={({ item }) => (
                     <Uf
                         onPress={() => handleUfSelect(item)}

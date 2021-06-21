@@ -2,19 +2,22 @@ import React, { createContext, ReactNode, useContext, useEffect, useState } from
 import * as Google from 'expo-google-app-auth';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import api from '../services/api';
 
 interface AuthProviderProps {
     children: ReactNode;
 }
 
 interface User {
-    id: string;
+    password: string;
     name: string;
     email: string;
-    photo?: string;
+    avatar_url?: string;
     cpf?: string;
     city?: string;
     state?: string;
+    token?: string;
+    refresh_token?: string;
 }
 
 interface IAuthContextData {
@@ -35,25 +38,114 @@ function AuthProvider({ children }: AuthProviderProps) {
 
     const userStorageKey = '@lysei:user';
 
-    function verifyUserRegisterComplete(email: string){
-        const data = { cpf: '', city: 'São José do Rio Pardo', state: 'SP'}
-        return data;
+    async function authentication(email: string){
+        try {
+            const response = await api.post('sessions', {
+                email: email,
+                password: ''
+            });
+
+            api.defaults.headers.Authorization = `Bearer ${response.data.token}`;
+
+            return response.data;
+            
+        } catch (error) {
+            if(error === 'Request failed with status code 400'){
+                return false;
+            }else{
+                throw new Error(error);
+            }
+        }
+    }
+
+    async function createUser(email: string, name: string, photoUrl: string, token: string, urefresh_token: string){
+        try {
+            const user = {
+                    password: '',
+                    name: name,
+                    email: email,
+                    avatar_url: photoUrl,
+                    cpf: '',
+                    city: '',
+                    state: '',
+                    token: token,
+                    refresh_token: urefresh_token,
+            }
+
+            const response = await api.post('users', user);
+
+            setUser(user);
+            await AsyncStorage.setItem(userStorageKey, JSON.stringify(user));
+
+            return response;
+            
+        } catch (error) {
+            if(error === 'Request failed with status code 400'){
+                return false;
+            }else{
+                throw new Error(error);
+            }
+        }
+    }
+
+    async function loadUser(token: string, refresh_token: string){
+        try {
+            const response = await api.get('users/profile');
+
+            console.log(response.data)
+
+            const userLogged = {
+                password: '',
+                email: response.data.email,
+                name: response.data.name,
+                photo: response.data.avatar_url,
+                cpf: response.data.cpf,
+                city: response.data.city,
+                state: response.data.state,
+                token: token,
+                refresh_token: refresh_token
+            };
+
+            setUser(userLogged);
+            await AsyncStorage.setItem(userStorageKey, JSON.stringify(userLogged));
+            
+        } catch (error) {
+            throw new Error(error);
+        }
     }
 
     async function userCompleteRegister(cpf: string, city: string, state: string){
 
-        const userLogged = {
-            id: user.id,
-            email: user.email,
-            name: user.name,
-            photo: user.photo,
-            cpf: cpf,
-            city: city,
-            state: state
-        };
+        try {
 
-        setUser(userLogged);
-        await AsyncStorage.setItem(userStorageKey, JSON.stringify(userLogged));
+            const userUpdate = {
+                name: user.name,
+                cpf: cpf,
+                email: user.email,
+                city: city,
+                state: state
+            };
+
+            const response = await api.patch('users', userUpdate);
+
+            const userLogged = {
+                password: '',
+                email: user.email,
+                name: user.name,
+                avatar_url: user.avatar_url,
+                cpf: cpf,
+                city: city,
+                state: state,
+                token: user.token,
+                refresh_token: user.refresh_token
+            };
+
+            setUser(userLogged);
+            await AsyncStorage.setItem(userStorageKey, JSON.stringify(userLogged));
+            
+        } catch (error) {
+            throw new Error(error);
+        }
     }
 
     async function SignInWithGoogle() {
@@ -65,21 +157,13 @@ function AuthProvider({ children }: AuthProviderProps) {
             })
 
             if (result.type === 'success') {
-                const userRegister = verifyUserRegisterComplete(result.user.email!);
-
-                const userLogged = {
-                    id: String(result.user.id),
-                    email: result.user.email!,
-                    name: result.user.name!,
-                    photo: result.user.photoUrl!,
-                    cpf: userRegister.cpf,
-                    city: userRegister.city,
-                    state: userRegister.state
-                };
-
-                setUser(userLogged);
-                await AsyncStorage.setItem(userStorageKey, JSON.stringify(userLogged));
-                console.log(userLogged);
+                const userRegister = await authentication(result.user.email!);
+                
+                if(userRegister === false){
+                    await createUser(result.user.email!, result.user.name!, result.user.photoUrl!, userRegister.token, userRegister.refresh_token);
+                }else{
+                    await loadUser(userRegister.token, userRegister.refresh_token);
+                }
             }
 
         } catch (error) {
@@ -97,23 +181,13 @@ function AuthProvider({ children }: AuthProviderProps) {
             })
 
             if (credential) {
-                const userRegister = verifyUserRegisterComplete(credential.email!);
-
-                const name = credential.fullName!.givenName!;
-                const photo = `https://ui-avatars.com/api/?name=${name}&length=1`;
-                const userLogged = {
-                    id: String(credential.user),
-                    email: credential.email!,
-                    name,
-                    photo,
-                    cpf: userRegister.cpf,
-                    city: userRegister.city,
-                    state: userRegister.state
-                };
-
-                setUser(userLogged);
-                await AsyncStorage.setItem(userStorageKey, JSON.stringify(userLogged))
-                console.log(userLogged)
+                const userRegister = await authentication(credential.email!);
+                
+                if(userRegister === false){
+                    await createUser(credential.email!, credential.fullName!.givenName!, '', userRegister.token, userRegister.refresh_token);
+                }else{
+                    await loadUser(userRegister.token, userRegister.refresh_token);
+                }
             }
 
         } catch (error) {

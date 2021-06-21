@@ -10,7 +10,8 @@ import { useFocusEffect } from '@react-navigation/native';
 
 import {
 	Container,
-	FilterBar
+	FilterBar,
+	Search
 } from './styles';
 
 import { Publication } from '../../components/Publication';
@@ -20,6 +21,7 @@ import { StateSelect } from '../StateSelect';
 import { CitySelect } from '../CitySelect';
 
 import { useAuth } from '../../hooks/auth';
+import api from '../../services/api';
 
 interface UserStateCity {
 	uf: string;
@@ -45,34 +47,41 @@ export function Feed({ navigation }: any) {
 	const theme = useTheme();
 	const { user } = useAuth();
 
-	const [data, setData] = useState<DataProps[]>([
-		{
-			name: "Eduardo",
-			city: "São José do Rio Pardo",
-			state: "SP",
-			avatar: "",
-			id: '1',
-			title: "Buraco",
-			totalLike: 270,
-			like: false,
-			status: false,
-			latitude: -21.5968283,
-			longitude: -46.8903086,
-		},
-		{
-			name: "Isabela",
-			city: "São José do Rio Pardo",
-			state: "SP",
-			avatar: "",
-			id: '2',
-			title: "Buraco",
-			totalLike: 100,
-			like: false,
-			status: false,
-			latitude: -21.5968283,
-			longitude: -46.8903086,
-		},
-	]);
+	async function loadData() {
+		/*const result = await api.post('posts/list', { city: city, state: uf });
+		setData(result.data)*/
+
+		setData([
+			{
+				name: "Eduardo",
+				city: "São José do Rio Pardo",
+				state: "SP",
+				avatar: "",
+				id: '1',
+				title: "Buraco",
+				totalLike: 270,
+				like: false,
+				status: true,
+				latitude: -21.5968283,
+				longitude: -46.8903086,
+			},
+			{
+				name: "Isabela",
+				city: "São José do Rio Pardo",
+				state: "SP",
+				avatar: "",
+				id: '2',
+				title: "Buraco",
+				totalLike: 100,
+				like: false,
+				status: false,
+				latitude: -21.5968283,
+				longitude: -46.8903086,
+			},
+		])
+	}
+
+	const [data, setData] = useState<DataProps[]>([]);
 
 	const [userUfCity, setUserUfCity] = useState<UserStateCity>({} as UserStateCity)
 
@@ -105,7 +114,7 @@ export function Feed({ navigation }: any) {
 		setCityModalOpen(false);
 	}
 
-	function handleUpdateLike(id_post: string, id_user: string, likes: number) {
+	function handleUpdateLike(id_post: string, likes: number) {
 
 		let newData = [...data];
 
@@ -119,16 +128,24 @@ export function Feed({ navigation }: any) {
 		setData(newData)
 	}
 
+	function handleSearch() {
+		loadData()
+	}
+
 	function handleToView(id_post: string) {
-		navigation.navigate('ViewOccurrence', {id_post});
+		navigation.navigate('ViewOccurrence', { id_post });
 	}
 
 	useFocusEffect(useCallback(() => {
-        const parent = navigation.dangerouslyGetParent();
+		const parent = navigation.dangerouslyGetParent();
 		parent.setOptions({
 			tabBarVisible: true
 		});
-    }, []));
+	}, []));
+
+	useFocusEffect(useCallback(() => {
+		loadData()
+	}, []));
 
 	return (
 		<Container>
@@ -164,11 +181,13 @@ export function Feed({ navigation }: any) {
 					/>
 				</Modal>
 
-				<Feather
-					name="search"
-					size={24}
-					color={theme.colors.primary}
-				/>
+				<Search onPress={handleSearch}>
+					<Feather
+						name="search"
+						size={24}
+						color={theme.colors.primary}
+					/>
+				</Search>
 			</FilterBar>
 
 			<FlatList
